@@ -1,0 +1,35 @@
+#!/bin/bash
+echo -e "Content-type: text/html\r\n\r\n"
+
+#for f in `ls /var/www/music`; do
+#    echo "$f" '<br>' 
+#done
+#ls /var/www/music | while read f
+#do
+#    echo "$f" '<br>' 
+#done
+#pwd
+#whoami
+
+tune=`find /var/www/music/* | grep -P "\.(mp3|m4a)$" | sort -R | head -n 1`
+wwwtune=`echo $tune | sed 's!^/var/www!!'`
+
+#echo '<a href="'`urlencode $wwwtune`'">'$wwwtune'</a><p>'
+echo '<a href="'$wwwtune'">'$wwwtune'</a><p>'
+
+#ls -l /var/www/music/* | sed 's/$/<br>/'
+#ls -l "/var/www/music/Carla Bruni" | sed 's/$/<br>/'
+#ls -l "$tune" 
+
+eyeD3 --no-color "$tune" | sed 's/$/<br>/' 
+echo '<p>'
+
+cat << PLAYER
+<audio controls autoplay>
+    <source src="$wwwtune" type="audio/mpeg">
+    Your browser does not support the audio element
+</audio>
+PLAYER
+echo '<p>'
+
+echo '<a href="'/cgi-bin/test'">'Next random song'</a><p>'

@@ -18,11 +18,9 @@ HEADER
 
 echo '<a href="'$wwwtune'">'$wwwtune'</a><p>'
 
-#<audio id="player" controls autoplay>
-
 cat << PLAYER
 <audio id="player" controls autoplay>
-    <source src="$wwwtune" type="audio/mpeg">
+    <source src="http://192.168.2.11/cgi-bin/testlame?$wwwtune" type="audio/mpeg">
     Your browser does not support the audio element
 </audio>
 PLAYER
@@ -50,7 +48,7 @@ cat << SCRIPTS
 <script>
   var aud = document.getElementById("player");
   aud.onended = function() {
-    window.location.href = "/cgi-bin/tune-o-matic";
+    window.location.href = "/cgi-bin/tunemate";
   };
   //aud.play();
 </script>

@@ -31,6 +31,27 @@ echo '<a id="next_tune" href="'/cgi-bin/tunemate'">'Next tune'</a><p>'
 eyeD3 --no-color "$tune" | sed 's/$/<br>/' 
 echo '<p>'
 
+echo DOCUMENT_ROOT=$DOCUMENT_ROOT - "The root directory of your server <br>"
+echo HTTP_COOKIE=$HTTP_COOKIE - "The visitor's cookie, if one is set <br>"
+echo HTTP_HOST=$HTTP_HOST - "The hostname of the page being attempted <br>"
+echo HTTP_REFERER=$HTTP_REFERER - "The URL of the page that called your program <br>"
+echo HTTP_USER_AGENT=$HTTP_USER_AGENT - "The browser type of the visitor <br>"
+echo HTTPS=$HTTPS - "on if the program is being called through a secure server <br>"
+echo PATH=$PATH - "The system path your server is running under <br>"
+echo QUERY_STRING=$QUERY_STRING - "The query string (see GET, below) <br>"
+echo REMOTE_ADDR=$REMOTE_ADDR - "The IP address of the visitor <br>"
+echo REMOTE_HOST=$REMOTE_HOST - "The hostname of the visitor (if your server has reverse-name-lookups on; otherwise this is the IP address again) <br>"
+echo REMOTE_PORT=$REMOTE_PORT - "The port the visitor is connected to on the web server <br>"
+echo REMOTE_USER=$REMOTE_USER - "The visitor's username (for .htaccess-protected pages) <br>"
+echo REQUEST_METHOD=$REQUEST_METHOD - "GET or POST <br>"
+echo REQUEST_URI=$REQUEST_URI - "The interpreted pathname of the requested document or CGI (relative to the document root) <br>"
+echo SCRIPT_FILENAME=$SCRIPT_FILENAME - "The full pathname of the current CGI <br>"
+echo SCRIPT_NAME=$SCRIPT_NAME - "The interpreted pathname of the current CGI (relative to the document root) <br>"
+echo SERVER_ADMIN=$SERVER_ADMIN - "The email address for your server's webmaster <br>"
+echo SERVER_NAME=$SERVER_NAME - "Your server's fully qualified domain name (e.g. www.cgi101.com) <br>"
+echo SERVER_PORT=$SERVER_PORT - "The port number your server is listening on <br>"
+echo SERVER_SOFTWARE=$SERVER_SOFTWARE - "The server software you're using (e.g. Apache 1.3) <br>"
+
 #echo $QUERY_STRING
 #echo '<p>'
 #

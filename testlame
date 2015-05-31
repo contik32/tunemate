@@ -1,14 +1,14 @@
 #!/bin/bash
-#echo -e "Content-type: text/html\r\n\r\n"
 
+#echo -e "Content-type: text/html\r\n\r\n"
 echo -e "Content-Type: audio/mpeg\r\n\r\n"
 
 tune_enc="$QUERY_STRING"
 tune_file=/var/www`urlencode -d $tune_enc`
 
-#ls -l "$aaa"
-#ls -l /var/www/music/Squirrel\ Nut\ Zippers/Tom\ Maxwell\ -\ Samsara\ -\ 2000/05.\ Maxwell\,\ Tom\ -\ If\ I\ Had\ You.mp3
-
-lame -b 96 -v --ta "myartist" "$tune_file" -
-#cat "$tune_file"
+if [ `echo "$tune_file" | grep -P -i "\.mp3$"` ]; then 
+    lame -b 96 -v --ta "myartist" "$tune_file" -
+else
+    cat "$tune_file"
+fi
 

@@ -2,7 +2,7 @@
 
 echo -e "Content-type: text/html\r\n\r\n"
 
-tune=`find /var/www/music/* | grep -P "\.(mp3|m4a)$" | sort -R | head -n 1`
+tune=`find /var/www/music/* | grep -P "\.mp3$" | sort -R | head -n 1`
 wwwtune=`echo $tune | sed 's!^/var/www!!'`
 
 lame_script="testlame"

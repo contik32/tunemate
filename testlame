@@ -7,7 +7,7 @@ tune_enc="$QUERY_STRING"
 tune_file=/var/www`urlencode -d $tune_enc`
 
 if [ `echo "$tune_file" | grep -P -i "\.mp3$"` ]; then 
-    lame -b 96 -v --ta "myartist" "$tune_file" -
+    lame -abr -V 9 -q 9 "$tune_file" -
 else
     cat "$tune_file"
 fi

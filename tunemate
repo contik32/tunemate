@@ -4,8 +4,14 @@ echo -e "Content-type: text/html\r\n\r\n"
 
 tune=`find /var/www/music/* | grep -P "\.mp3$" | sort -R | head -n 1`
 wwwtune=`echo $tune | sed 's!^/var/www!!'`
-
 lame_script="testlame"
+quality=`echo "$QUERY_STRING" | tr [A-Z] [a-z] | grep -o -P "quality=([a-z0-9]+)" | sed "s/^.\+=//"`
+next_tune="$SCRIPT_NAME?quality=$quality"
+tune2play="/cgi-bin/$lame_script?$wwwtune" 
+
+if [ "$quality" == "high" ]; then
+  tune2play=$wwwtune
+fi
 
 cat << HEADER
 <!DOCTYPE html>
@@ -19,20 +25,24 @@ cat << HEADER
 <body>
 HEADER
 
-echo '<a href="'$wwwtune'">'$wwwtune'</a><p>'
+echo '<a id="next_tune" href="'$next_tune'">'Next tune'</a><p>'
 
+#<source src="http://$SERVER_NAME/cgi-bin/$lame_script?$wwwtune" type="audio/mpeg">
 cat << PLAYER
 <audio id="player" controls autoplay>
-    <source src="http://$SERVER_NAME/cgi-bin/$lame_script?$wwwtune" type="audio/mpeg">
+    <source src="http://$SERVER_NAME$tune2play" type="audio/mpeg">
     Your browser does not support the audio element
 </audio>
 PLAYER
 echo '<p>'
 
-echo '<a id="next_tune" href="'$SCRIPT_NAME'">'Next tune'</a><p>'
+
+echo "Tune quality: $quality<p>"
 
 eyeD3 --no-color "$tune" | sed 's/$/<br>/' 
 echo '<p>'
+
+echo '<a href="'$wwwtune'">'$wwwtune'</a><p>'
 
 #echo DOCUMENT_ROOT=$DOCUMENT_ROOT - "The root directory of your server <br>"
 #echo HTTP_COOKIE=$HTTP_COOKIE - "The visitor's cookie, if one is set <br>"
@@ -72,7 +82,7 @@ cat << SCRIPTS
 <script>
   var aud = document.getElementById("player");
   aud.onended = function() {
-    window.location.href = "$SCRIPT_NAME";
+    window.location.href = "$next_tune";
   };
 </script>
 SCRIPTS

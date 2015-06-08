@@ -2,7 +2,8 @@
 
 echo -e "Content-type: text/html\r\n\r\n"
 
-tune=`find /var/www/music/* | grep -P "\.mp3$" | sort -R | head -n 1`
+artist=`find /var/www/music/* | grep -P -i '\.mp3$' | sed 's!^/var/www/music/!!;s!\/.\+$!!' | sort | uniq -c | ./calc-artist-ratings | grep "Random artist:" | sed 's/Random artist: //'`
+tune=`find "/var/www/music/$artist" | grep -P "\.mp3$" | sort -R | head -n 1`
 wwwtune=`echo $tune | sed 's!^/var/www!!'`
 lame_script="testlame"
 quality=`echo "$QUERY_STRING" | tr [A-Z] [a-z] | grep -o -P "quality=([a-z0-9]+)" | sed "s/^.\+=//"`
@@ -38,6 +39,8 @@ echo '<p>'
 
 
 echo "Tune quality: $quality<p>"
+
+echo Random artist: $artist "<p>"
 
 eyeD3 --no-color "$tune" | sed 's/$/<br>/' 
 echo '<p>'
